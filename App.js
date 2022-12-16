@@ -1,40 +1,45 @@
-import { StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, Text, View,KeyboardAvoidingView } from "react-native";
+
 import CameraScreen from "./components/Camera Module/CameraScreen";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { StatusBar } from 'expo-status-bar';
+
+import * as Network from "expo-network";
+
+
+import { useEffect, useState } from "react";
+import { Dialog } from "@rneui/themed";
 export default function App() {
-  const Stack = createNativeStackNavigator();
-  const Drawer = createDrawerNavigator();
-  return (
-    // <StatusBar style="light" />
-    <CameraScreen></CameraScreen>
-    // <NavigationContainer>
-    //  <Drawer.Navigator 
-    //  screenOptions={{
-    //     drawerStyle: {
-    //       // backgroundColor: '#DCD7C9',
-    //       width: 240,
-    //     }, headerStyle:{
-    //       backgroundColor:'#3F4E4F',
-    //       borderRadius:25,
-    //       height:120
-    //     },
-    //     headerTitleStyle:{
-    //       fontSize:20,
-    //       color:'white'
-    //     },
-       
-    //   }} >
-    //     <Drawer.Screen name='Home' component={CameraScreen} />
-    //     {/* <Drawer.Screen name='How to use' component={CameraScreen} /> */}
-        
-    //   </Drawer.Navigator>
-    // </NavigationContainer>
-     
-    
-  );
+  const [internet, setInternet] = useState(false);
+  async function network() {
+    const network = await Network.getNetworkStateAsync();
+    const data = await network;
+    setInternet(data.isInternetReachable);
+    // console.log(data)
+    // return network;
+  }
+  useEffect(() => {
+    // const network=await Network.getNetworkStateAsync()
+    network();
+    // .then((res) => );
+  }, [network]);
+
+  if (internet) {
+    return <CameraScreen />;
+  } else if (!internet) {
+    return (
+      <View>
+      <KeyboardAvoidingView>
+
+        <Dialog isVisible={true} onBackdropPress={network}>
+          <Dialog.Title title="No internet connection" />
+          <Text>Please turn on your internet connection</Text>
+          <Dialog.Actions>
+            <Dialog.Button title="OK" onPress={() => network()} />
+          </Dialog.Actions>
+        </Dialog>
+      </KeyboardAvoidingView>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({});

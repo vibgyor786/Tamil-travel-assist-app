@@ -8,7 +8,7 @@
     body: JSON.stringify({ text: item }),
   };
 
-  const response = await fetch("backend translator api", options);
+  const response = await fetch("backend api", options);
   const result = await response.json();
   return result
 };

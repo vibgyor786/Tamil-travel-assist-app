@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "tamilapp",
+    "name": "Tash",
     "slug": "tamilapp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/66.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/new.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,12 +22,20 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/66.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.ganeshsahu.tamilapp"
+      
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b91b39e2-887c-4d46-b136-60cb472dfec4"
+      }
+    },
+    "description": ""
   }
 }

@@ -1,9 +1,11 @@
-import { View, Text } from "react-native";
+import { View, Text,KeyboardAvoidingView } from "react-native";
 import React from "react";
 import { Dialog } from "@rneui/themed";
 
 export default function CustomModal(props) {
   return (
+    <KeyboardAvoidingView>
+
     <Dialog isVisible={props.openModal} onBackdropPress={props.closeModal}>
       <Dialog.Title title="Welcome to Tamil Travel Assist App" />
       <Text>
@@ -16,5 +18,6 @@ export default function CustomModal(props) {
         />
       </Dialog.Actions>
     </Dialog>
+    </KeyboardAvoidingView>
   );
 }

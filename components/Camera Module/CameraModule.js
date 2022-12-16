@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View,Text,KeyboardAvoidingView } from "react-native";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,6 +12,7 @@ import CustomModal from "../modal/CustomModal";
 import ShowImage from "../image component/ShowImage";
 import OpenCamera from "./opencamera/OpenCamera";
 import TranslatorComponent from "../translator/TranslatorComponent";
+import { Dialog } from "@rneui/themed";
 export default function Add({ navigation }) {
   const [cameraPermission, setCameraPermission] = useState(null);
   const [galleryPermission, setGalleryPermission] = useState(null);
@@ -27,7 +28,7 @@ export default function Add({ navigation }) {
   const [antdesign, setDesign] = useState("sound");
   const [openModal,setOpenModal]=useState(true)
   const [modalText,setModalText]=useState(`Tamil Travel assist app is a set of vision-based computing capabilities that can understand what you're looking at and use that information to copy or translate text , menus, baords, and take other useful actions`)
-
+  const [error,setError]=useState(false)
   const permisionFunction = async () => {
     // here is how you can get the camera permission
     const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -60,7 +61,9 @@ export default function Add({ navigation }) {
   useEffect(() => {
     permisionFunction();
   }, []);
-
+const closeError=()=>{
+  setError(false)
+}
   const speak = async (item) => {
     try {
       let amount_np = "";
@@ -83,6 +86,7 @@ export default function Add({ navigation }) {
       Speech.speak(translation);
     } catch (error) {
       console.log(error);
+      setError(true)
     }
   };
 
@@ -106,6 +110,7 @@ export default function Add({ navigation }) {
     } catch (e) {
       console.log(e);
       setLoader(false);
+      setError(true)
     }
   };
   const storePhoto = async (value) => {
@@ -127,6 +132,7 @@ export default function Add({ navigation }) {
       }
     } catch (error) {
       console.log(error);
+      setError(true)
     }
   };
 
@@ -154,6 +160,21 @@ export default function Add({ navigation }) {
   return (
     <View style={styles.container}>
    <CustomModal closeModal={closeModal} openModal={openModal} modalText={modalText}/>
+   <KeyboardAvoidingView>
+
+   <Dialog isVisible={error} onBackdropPress={closeError}>
+      <Dialog.Title title="Oops !" />
+      <Text>
+        Some error occurred 
+      </Text>
+      <Dialog.Actions>
+        <Dialog.Button
+          title="Retry"
+          onPress={() => closeError()}
+        />
+      </Dialog.Actions>
+    </Dialog>
+   </KeyboardAvoidingView>
       {showcamera && (
         <OpenCamera
           setCamera={setCamera}
