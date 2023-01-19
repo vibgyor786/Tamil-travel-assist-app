@@ -13,5 +13,6 @@
 https://user-images.githubusercontent.com/74828322/213483998-7cdbaac4-918a-4020-903c-80e753a55f93.mp4
 
 </div>
-
+<div align="center">
 <a align="center" href="https://drive.google.com/file/d/1Ka7-7zTacvFAoOxG1UZdKepwVoAhsRta/view?usp=sharing">Link for downloading the mobile application</a>
+</div>
